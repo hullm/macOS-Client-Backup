@@ -199,7 +199,7 @@ CheckLastBackup()
 	# This will look at the date stored in LastBackup.txt to see if they've already backed up today.
 	
 	if (test -e "$backupFolder/LastBackup.txt"); then
-		lastBackupDate="$(cat $backupFolder/LastBackup.txt)"
+		lastBackupDate="$(cat "$backupFolder/LastBackup.txt")"
 		if [ "$lastBackupDate" == "$todaysDate" ]; then
 			echo "Data already backed up today..."
 			UnmountBackupDrive
@@ -217,8 +217,8 @@ BackupData()
 	echo "Backing up $sourceFolder..."
 	rsync --exclude '.DS_Store' --exclude 'Application Support/Google/Chrome' --exclude 'Library/Caches' --recursive --owner --group --times --progress "$sourceFolder/" "$backupFolder" >/dev/null 2>&1
 	echo "$sourceFolder folder backed up..."
-	echo "$(date) - $sourceFolder backed up to $backupFolder" >> $backupFolder/Log.txt
-	echo $todaysDate > $backupFolder/LastBackup.txt
+	echo "$(date) - $sourceFolder backed up to $backupFolder" >> "$backupFolder/Log.txt"
+	echo $todaysDate > "$backupFolder/LastBackup.txt"
 
 }
 
