@@ -62,6 +62,9 @@ CheckBackupAuthorized()
 	# Use this section to prevent it from backing up a single user's data.
 	skipUser=false
 
+	if [[ $lastUser == "root" ]]; then
+		skipUser=true
+	fi
 	if [[ $lastUser == "admin" ]]; then
 		skipUser=true
 	fi

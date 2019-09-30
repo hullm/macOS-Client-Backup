@@ -83,6 +83,9 @@ CheckBackupAuthorized()
 	# Use this section to prevent it from backing up a single user's data.
 	skipUser=false
 
+	if [[ $lastUser == "root" ]]; then
+		skipUser=true
+	fi
 	if [[ $lastUser == "admin" ]]; then
 		skipUser=true
 	fi
@@ -220,7 +223,7 @@ CheckLastBackup()
 	# This will look at the date stored in LastBackup.txt to see if they've already backed up today.
 	
 	if (test -e "$backupFolder/LastBackup.txt"); then
-		lastBackupDate="$(cat $backupFolder/LastBackup.txt)"
+		lastBackupDate="$(cat "$backupFolder/LastBackup.txt")"
 		if [ "$lastBackupDate" == "$todaysDate" ]; then
 			echo "Data already backed up today..."
 			UnmountBackupDrive
@@ -238,8 +241,8 @@ BackupData()
 	echo "Backing up $sourceFolder..."
 	rsync --exclude '.DS_Store' --exclude 'Application Support/Google/Chrome' --exclude 'Library/Caches' --recursive --owner --group --times --progress "$sourceFolder/" "$backupFolder" &gt;/dev/null 2&gt;&amp;1
 	echo "$sourceFolder folder backed up..."
-	echo "$(date) - $sourceFolder backed up to $backupFolder" &gt;&gt; $backupFolder/Log.txt
-	echo $todaysDate &gt; $backupFolder/LastBackup.txt
+	echo "$(date) - $sourceFolder backed up to $backupFolder" &gt;&gt; "$backupFolder/Log.txt"
+	echo $todaysDate &gt; "$backupFolder/LastBackup.txt"
 
 }
 
