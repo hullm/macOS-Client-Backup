@@ -123,7 +123,7 @@ CheckFileIntegrity()
         else
              rm -f "$sourceFolder/Documents/zIgnoreWord.docx"
         fi
-	elif [[ $(ls "$sourceFolder/Documents/zIgnoreWord."* | wc -l) ==  *"1" ]] >/dev/null 2>&1; then
+	elif [[ $(ls "$sourceFolder/Documents/zIgnoreWord."* | wc -l) ==  *"1" ]] &gt;/dev/null 2&gt;&amp;1; then
 		filesGood=false
 	fi
 
@@ -136,7 +136,7 @@ CheckFileIntegrity()
         else
              rm -f "$sourceFolder/Documents/zIgnoreExcel.xlsx"
         fi
-	elif [[ $(ls "$sourceFolder/Documents/zIgnoreExcel."* | wc -l) ==  *"1" ]] >/dev/null 2>&1; then
+	elif [[ $(ls "$sourceFolder/Documents/zIgnoreExcel."* | wc -l) ==  *"1" ]] &gt;/dev/null 2&gt;&amp;1; then
 		filesGood=false
 	fi
 	
@@ -149,7 +149,7 @@ CheckFileIntegrity()
 		else
             rm -f "$sourceFolder/Documents/zIgnoreImage.png"
 		fi
-	elif [[ $(ls "$sourceFolder/Documents/zIgnoreImage."* | wc -l) ==  *"1" ]] >/dev/null 2>&1; then
+	elif [[ $(ls "$sourceFolder/Documents/zIgnoreImage."* | wc -l) ==  *"1" ]] &gt;/dev/null 2&gt;&amp;1; then
 		filesGood=false
 	fi		
 
