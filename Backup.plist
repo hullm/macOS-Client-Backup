@@ -116,30 +116,42 @@ CheckFileIntegrity()
 
 	if (test -e "$sourceFolder/Documents/zIgnoreWord.docx" ); then
 		integrityTest=$(file "$sourceFolder/Documents/zIgnoreWord.docx")
-		if !( [[ $integrityTest == "$sourceFolder/Documents/zIgnoreWord.docx: Microsoft Word 2007+" ]] ); then
-			filesGood=false
-		fi
-	elif [[ $(ls "$sourceFolder/Documents/zIgnoreWord."* | wc -l) ==  *"1" ]] &gt;/dev/null 2&gt;&amp;1; then
+        if [ -s "$sourceFolder/Documents/zIgnoreWord.docx" ]; then
+            if !( [[ $integrityTest == "$sourceFolder/Documents/zIgnoreWord.docx: Microsoft Word 2007+" ]] ); then
+                filesGood=false
+            fi
+        else
+             rm -f "$sourceFolder/Documents/zIgnoreWord.docx"
+        fi
+	elif [[ $(ls "$sourceFolder/Documents/zIgnoreWord."* | wc -l) ==  *"1" ]] >/dev/null 2>&1; then
 		filesGood=false
 	fi
 
 	if (test -e "$sourceFolder/Documents/zIgnoreExcel.xlsx" ); then
 		integrityTest=$(file "$sourceFolder/Documents/zIgnoreExcel.xlsx")
-		if !( [[ $integrityTest == "$sourceFolder/Documents/zIgnoreExcel.xlsx: Microsoft Excel 2007+" ]] ); then
-			filesGood=false
-		fi
-	elif [[ $(ls "$sourceFolder/Documents/zIgnoreExcel."* | wc -l) ==  *"1" ]] &gt;/dev/null 2&gt;&amp;1; then
+        if [ -s "$sourceFolder/Documents/zIgnoreExcel.xlsx" ]; then
+            if !( [[ $integrityTest == "$sourceFolder/Documents/zIgnoreExcel.xlsx: Microsoft Excel 2007+" ]] ); then
+                filesGood=false
+            fi
+        else
+             rm -f "$sourceFolder/Documents/zIgnoreExcel.xlsx"
+        fi
+	elif [[ $(ls "$sourceFolder/Documents/zIgnoreExcel."* | wc -l) ==  *"1" ]] >/dev/null 2>&1; then
 		filesGood=false
 	fi
 	
 	if (test -e "$sourceFolder/Documents/zIgnoreImage.png" ); then
 		integrityTest=$(file "$sourceFolder/Documents/zIgnoreImage.png")
-		if !( [[ $integrityTest == "$sourceFolder/Documents/zIgnoreImage.png: PNG image data, 1464 x 902, 8-bit/color RGBA, non-interlaced" ]] ); then
-			filesGood=false
+		if [ -s "$sourceFolder/Documents/zIgnoreImage.png" ]; then
+			if !( [[ $integrityTest == "$sourceFolder/Documents/zIgnoreImage.png: PNG image data, 1464 x 902, 8-bit/color RGBA, non-interlaced" ]] ); then
+				filesGood=false
+			fi
+		else
+            rm -f "$sourceFolder/Documents/zIgnoreImage.png"
 		fi
-	elif [[ $(ls "$sourceFolder/Documents/zIgnoreImage."* | wc -l) ==  *"1" ]] &gt;/dev/null 2&gt;&amp;1; then
+	elif [[ $(ls "$sourceFolder/Documents/zIgnoreImage."* | wc -l) ==  *"1" ]] >/dev/null 2>&1; then
 		filesGood=false
-	fi	
+	fi		
 
 	if !($filesGood); then
 		curl -s "https://inventory.domain.com/admin/api.asp?Type=AlertInfected&amp;Serial=$serialNumber"
